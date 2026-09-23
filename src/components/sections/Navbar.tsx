@@ -67,10 +67,12 @@ export default function Navbar() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="fixed top-3 sm:top-5 left-0 right-0 z-50 px-3 sm:px-6 max-w-7xl mx-auto pointer-events-none"
+      className={`fixed top-3 sm:top-5 left-0 right-0 z-50 px-3 sm:px-6 pointer-events-none transition-all duration-500 ${
+        isScrolled ? 'max-w-3xl mx-auto' : 'max-w-7xl mx-auto'
+      }`}
     >
-      <div className={`pointer-events-auto rounded-full transition-all duration-300 ${isScrolled
-        ? 'bg-white/90 shadow-2xl backdrop-blur-xl border border-white/60 py-2 sm:py-2.5 px-4 sm:px-6'
+      <div className={`pointer-events-auto rounded-full transition-all duration-500 ${isScrolled
+        ? 'bg-[#FF4D1C] shadow-2xl shadow-[#FF4D1C]/30 border border-[#FF4D1C] py-2 sm:py-2.5 px-4 sm:px-6'
         : 'bg-white/85 shadow-lg backdrop-blur-lg border border-white/50 py-2.5 sm:py-3 px-4 sm:px-6'
         }`}>
         <div className="flex items-center justify-between">
@@ -84,11 +86,22 @@ export default function Navbar() {
             className="flex items-center gap-3 group"
           >
 
-            <div className="flex flex-col text-left">
-              <span className="text-slate-900 font-bold text-sm sm:text-base leading-tight tracking-tight group-hover:text-[#FF4D1C] transition-colors duration-300">
-                Masud Rana
-              </span>
-            </div>
+            <AnimatePresence>
+              {!isScrolled && (
+                <motion.div
+                  key="brand-name"
+                  initial={{ opacity: 0, width: 0 }}
+                  animate={{ opacity: 1, width: 'auto' }}
+                  exit={{ opacity: 0, width: 0 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  className="overflow-hidden flex flex-col text-left"
+                >
+                  <span className="text-slate-900 font-bold text-sm sm:text-base leading-tight tracking-tight group-hover:text-[#FF4D1C] transition-colors duration-300 whitespace-nowrap">
+                    Masud Rana
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </a>
 
           {/* Center: Nav Items (Desktop) */}
@@ -103,14 +116,17 @@ export default function Navbar() {
                     e.preventDefault()
                     handleNavClick(item.href)
                   }}
-                  className={`text-sm font-semibold transition-colors duration-200 relative py-1 ${isActive ? 'text-slate-950' : 'text-slate-600 hover:text-slate-950'
-                    }`}
+                  className={`text-sm font-semibold transition-colors duration-200 relative py-1 ${
+                    isActive
+                      ? isScrolled ? 'text-white' : 'text-slate-950'
+                      : isScrolled ? 'text-white/80 hover:text-white' : 'text-slate-600 hover:text-slate-950'
+                  }`}
                 >
                   {item.name}
                   {isActive && (
                     <motion.div
                       layoutId="activeSectionPill"
-                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#FF4D1C] rounded-full"
+                      className={`absolute -bottom-1 left-0 right-0 h-0.5 rounded-full ${isScrolled ? 'bg-white' : 'bg-[#FF4D1C]'}`}
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -122,14 +138,23 @@ export default function Navbar() {
           {/* Right: Live Status & Action Button */}
           <div className="flex items-center space-x-3 sm:space-x-5">
 
-            <a
-              href="tel:+8801757922258"
-              className="hidden lg:flex items-center gap-2 bg-slate-950 text-white hover:bg-slate-800 text-xs font-bold px-4 sm:px-5 py-2.5 rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] group"
-            >
-
-              <span>DOWNLOAD RESUME</span>
-              <ArrowDown className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300" />
-            </a>
+            <AnimatePresence>
+              {!isScrolled && (
+                <motion.a
+                  key="download-resume"
+                  href="/resume.pdf"
+                  download
+                  initial={{ opacity: 0, scale: 0.85, x: 10 }}
+                  animate={{ opacity: 1, scale: 1, x: 0 }}
+                  exit={{ opacity: 0, scale: 0.85, x: 10 }}
+                  transition={{ duration: 0.25, ease: 'easeOut' }}
+                  className="hidden lg:flex items-center gap-2 bg-slate-950 text-white hover:bg-slate-800 text-xs font-bold px-4 sm:px-5 py-2.5 rounded-full shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] group"
+                >
+                  <span>DOWNLOAD RESUME</span>
+                  <ArrowDown className="w-3.5 h-3.5 group-hover:translate-y-0.5 transition-transform duration-300" />
+                </motion.a>
+              )}
+            </AnimatePresence>
 
             {/* Mobile Menu Button */}
             <button
