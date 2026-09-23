@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, PhoneCall, ArrowRight } from 'lucide-react'
+import { Menu, X, PhoneCall, ArrowRight, ArrowDown } from 'lucide-react'
 
 const navItems = [
   { name: 'Story', href: '#about' },
@@ -69,11 +69,10 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       className="fixed top-3 sm:top-5 left-0 right-0 z-50 px-3 sm:px-6 max-w-7xl mx-auto pointer-events-none"
     >
-      <div className={`pointer-events-auto rounded-full transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white/90 shadow-2xl backdrop-blur-xl border border-white/60 py-2 sm:py-2.5 px-4 sm:px-6'
-          : 'bg-white/85 shadow-lg backdrop-blur-lg border border-white/50 py-2.5 sm:py-3 px-4 sm:px-6'
-      }`}>
+      <div className={`pointer-events-auto rounded-full transition-all duration-300 ${isScrolled
+        ? 'bg-white/90 shadow-2xl backdrop-blur-xl border border-white/60 py-2 sm:py-2.5 px-4 sm:px-6'
+        : 'bg-white/85 shadow-lg backdrop-blur-lg border border-white/50 py-2.5 sm:py-3 px-4 sm:px-6'
+        }`}>
         <div className="flex items-center justify-between">
           {/* Left: Brand Logo & Tagline */}
           <a
@@ -84,15 +83,10 @@ export default function Navbar() {
             }}
             className="flex items-center gap-3 group"
           >
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-slate-950 text-white flex items-center justify-center font-bold text-sm sm:text-base tracking-tight shadow-md group-hover:scale-105 transition-transform duration-300">
-              M
-            </div>
+
             <div className="flex flex-col text-left">
               <span className="text-slate-900 font-bold text-sm sm:text-base leading-tight tracking-tight group-hover:text-[#FF4D1C] transition-colors duration-300">
                 Masud Rana
-              </span>
-              <span className="text-[10px] sm:text-[11px] font-semibold tracking-wider text-slate-500 uppercase leading-tight">
-                DHAKA · SOFTWARE ENGINEER
               </span>
             </div>
           </a>
@@ -109,9 +103,8 @@ export default function Navbar() {
                     e.preventDefault()
                     handleNavClick(item.href)
                   }}
-                  className={`text-sm font-semibold transition-colors duration-200 relative py-1 ${
-                    isActive ? 'text-slate-950' : 'text-slate-600 hover:text-slate-950'
-                  }`}
+                  className={`text-sm font-semibold transition-colors duration-200 relative py-1 ${isActive ? 'text-slate-950' : 'text-slate-600 hover:text-slate-950'
+                    }`}
                 >
                   {item.name}
                   {isActive && (
@@ -128,23 +121,14 @@ export default function Navbar() {
 
           {/* Right: Live Status & Action Button */}
           <div className="flex items-center space-x-3 sm:space-x-5">
-            {/* Live Indicator Dot & Status */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-100/80 border border-slate-200/60 text-slate-700 text-xs font-semibold tracking-wide">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF4D1C] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF4D1C]"></span>
-              </span>
-              <span>{currentTime || '11:00'} · OPEN</span>
-            </div>
 
-            {/* CTA Button */}
             <a
               href="tel:+8801757922258"
               className="hidden lg:flex items-center gap-2 bg-slate-950 text-white hover:bg-slate-800 text-xs font-bold px-4 sm:px-5 py-2.5 rounded-full transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] group"
             >
-              <PhoneCall className="w-3.5 h-3.5 group-hover:rotate-12 transition-transform duration-300" />
-              <span>Call now</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300" />
+
+              <span>DOWNLOAD RESUME</span>
+              <ArrowDown className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300" />
             </a>
 
             {/* Mobile Menu Button */}
